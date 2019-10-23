@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4557DA2723610257003752D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4557DA2623610257003752D3 /* UIKit.framework */; };
 		459005F12360F2EE00B0F296 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459005F02360F2EE00B0F296 /* MapKit.framework */; };
 		45E1C7292360EE400079DBB1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C7282360EE400079DBB1 /* AppDelegate.m */; };
 		45E1C72C2360EE400079DBB1 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C72B2360EE400079DBB1 /* SceneDelegate.m */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4557DA2623610257003752D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		459005F02360F2EE00B0F296 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		45E1C7242360EE400079DBB1 /* mapapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mapapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E1C7272360EE400079DBB1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -40,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4557DA2723610257003752D3 /* UIKit.framework in Frameworks */,
 				459005F12360F2EE00B0F296 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +53,7 @@
 		459005EF2360F2EE00B0F296 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4557DA2623610257003752D3 /* UIKit.framework */,
 				459005F02360F2EE00B0F296 /* MapKit.framework */,
 			);
 			name = Frameworks;
