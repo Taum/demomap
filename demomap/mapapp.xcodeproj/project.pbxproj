@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		459005F12360F2EE00B0F296 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459005F02360F2EE00B0F296 /* MapKit.framework */; };
 		45E1C7292360EE400079DBB1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C7282360EE400079DBB1 /* AppDelegate.m */; };
 		45E1C72C2360EE400079DBB1 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C72B2360EE400079DBB1 /* SceneDelegate.m */; };
 		45E1C72F2360EE400079DBB1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C72E2360EE400079DBB1 /* ViewController.m */; };
@@ -14,9 +15,11 @@
 		45E1C7342360EE460079DBB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E1C7332360EE460079DBB1 /* Assets.xcassets */; };
 		45E1C7372360EE460079DBB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E1C7352360EE460079DBB1 /* LaunchScreen.storyboard */; };
 		45E1C73A2360EE460079DBB1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C7392360EE460079DBB1 /* main.m */; };
+		45F273932360F101002FCC4F /* feed.json in Resources */ = {isa = PBXBuildFile; fileRef = 45F273922360F101002FCC4F /* feed.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		459005F02360F2EE00B0F296 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		45E1C7242360EE400079DBB1 /* mapapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mapapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E1C7272360EE400079DBB1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		45E1C7282360EE400079DBB1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -29,6 +32,7 @@
 		45E1C7362360EE460079DBB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45E1C7382360EE460079DBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45E1C7392360EE460079DBB1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		45F273922360F101002FCC4F /* feed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = feed.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,17 +40,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				459005F12360F2EE00B0F296 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		459005EF2360F2EE00B0F296 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				459005F02360F2EE00B0F296 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		45E1C71B2360EE400079DBB1 = {
 			isa = PBXGroup;
 			children = (
 				45E1C7262360EE400079DBB1 /* mapapp */,
 				45E1C7252360EE400079DBB1 /* Products */,
+				459005EF2360F2EE00B0F296 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +75,7 @@
 		45E1C7262360EE400079DBB1 /* mapapp */ = {
 			isa = PBXGroup;
 			children = (
+				45F273912360F0CE002FCC4F /* data */,
 				45E1C7272360EE400079DBB1 /* AppDelegate.h */,
 				45E1C7282360EE400079DBB1 /* AppDelegate.m */,
 				45E1C72A2360EE400079DBB1 /* SceneDelegate.h */,
@@ -74,6 +89,14 @@
 				45E1C7392360EE460079DBB1 /* main.m */,
 			);
 			path = mapapp;
+			sourceTree = "<group>";
+		};
+		45F273912360F0CE002FCC4F /* data */ = {
+			isa = PBXGroup;
+			children = (
+				45F273922360F101002FCC4F /* feed.json */,
+			);
+			path = data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E1C7372360EE460079DBB1 /* LaunchScreen.storyboard in Resources */,
+				45F273932360F101002FCC4F /* feed.json in Resources */,
 				45E1C7342360EE460079DBB1 /* Assets.xcassets in Resources */,
 				45E1C7322360EE400079DBB1 /* Main.storyboard in Resources */,
 			);
