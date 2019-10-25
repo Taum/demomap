@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450C259123639BED00F906C1 /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 450C259023639BED00F906C1 /* MyAnnotation.m */; };
 		4557DA2723610257003752D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4557DA2623610257003752D3 /* UIKit.framework */; };
 		459005F12360F2EE00B0F296 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459005F02360F2EE00B0F296 /* MapKit.framework */; };
 		45E1C7292360EE400079DBB1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C7282360EE400079DBB1 /* AppDelegate.m */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		450C258F23639BED00F906C1 /* MyAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
+		450C259023639BED00F906C1 /* MyAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
 		4557DA2623610257003752D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		459005F02360F2EE00B0F296 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		45E1C7242360EE400079DBB1 /* mapapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mapapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				45F273922360F101002FCC4F /* feed.json */,
+				450C258F23639BED00F906C1 /* MyAnnotation.h */,
+				450C259023639BED00F906C1 /* MyAnnotation.m */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E1C72F2360EE400079DBB1 /* ViewController.m in Sources */,
+				450C259123639BED00F906C1 /* MyAnnotation.m in Sources */,
 				45E1C7292360EE400079DBB1 /* AppDelegate.m in Sources */,
 				45E1C73A2360EE460079DBB1 /* main.m in Sources */,
 				45E1C72C2360EE400079DBB1 /* SceneDelegate.m in Sources */,

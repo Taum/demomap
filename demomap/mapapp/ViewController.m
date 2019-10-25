@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MyAnnotation.h"
 
 @interface ViewController () <MKMapViewDelegate>
 
@@ -51,16 +52,21 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     
     NSLog(@"Parsed feed data with %ld entries", [self.feedData count]);
     
-    MKPointAnnotation *item = [[MKPointAnnotation alloc] init];
-    item.coordinate = CLLocationCoordinate2DMake(45.45, -74.15);
-    item.title = @"Montreal";
-    item.subtitle = @"subtitle";
-    
-    self.annotations = @[item];
-    
-    [self.mapView addAnnotations:self.annotations];
+    [self addAnnotationsWithFeedItems:self.feedData];
 }
 
+- (void)addAnnotationsWithFeedItems:(NSArray*)items {
+    
+    NSMutableArray *array = [NSMutableArray array];
+    
+    for (NSDictionary *item in items) {
+        MyAnnotation *annotation = [[MyAnnotation alloc] initWithFeedItem:item];
+        [array addObject:annotation];
+    }
+    
+    self.annotations = array;
+    [self.mapView addAnnotations:self.annotations];
+}
 
 //#pragma mark - Map View Delegate methods
 
