@@ -9,9 +9,14 @@
 #import "ViewController.h"
 #import "MyAnnotation.h"
 
+#import "UIImage+ColorChange.h"
+#import "UIColor+Utility.h"
+
 @interface ViewController () <MKMapViewDelegate>
 
 @property (nonatomic) NSArray *annotations;
+@property (nonatomic) UIImage *basePinImage;
+@property (nonatomic) NSMutableDictionary *pinImagesByColor;
 
 @end
 
@@ -26,8 +31,11 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.basePinImage = [UIImage imageNamed:@"pin"];
+    self.pinImagesByColor = [NSMutableDictionary dictionary];
+    
     self.mapView.delegate = self;
-    [self.mapView registerClass:[MKPinAnnotationView class] forAnnotationViewWithReuseIdentifier:ANNOTATION_PIN_ID];
+    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:ANNOTATION_PIN_ID];
     
     [self loadData];
 }
@@ -77,19 +85,64 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
           return nil;
     }
     
-    MKPinAnnotationView *view = (MKPinAnnotationView*)[mv dequeueReusableAnnotationViewWithIdentifier:ANNOTATION_PIN_ID
+    MKAnnotationView *view = (MKAnnotationView*)[mv dequeueReusableAnnotationViewWithIdentifier:ANNOTATION_PIN_ID
     forAnnotation:annotation];
     if (!view) {
-        view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNOTATION_PIN_ID];
-        view.pinTintColor = MKPinAnnotationView.redPinColor;
-        view.animatesDrop = YES;
-        view.canShowCallout = YES;
+        view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ANNOTATION_PIN_ID];
     }
     else {
         view.annotation = annotation;
     }
+
+    view.image = [self imageForAnnotation:annotation];
+//    view.tint = [UIColor greenColor];
+    view.canShowCallout = YES;
+    
     return view;
     
+}
+
+- (UIImage*)imageForAnnotation:(id<MKAnnotation>)annotation {
+    if ([annotation respondsToSelector:@selector(countryCode)]) {
+        MyAnnotation *myAnn = (MyAnnotation*)annotation;
+
+        
+//        Pin colors:
+//         - Canada: #f44336
+//         - United-State: #e040fb
+//         - France: #3f51b5
+//         - United Kingdom: #8bc34a
+//         - Germany: #ffc107
+//         - Other country: #00bcd4
+        
+        NSString *countryCode = myAnn.countryCode;
+        
+        NSDictionary *colors = @{
+            @"CA": @"#f44336",
+            @"US": @"#e040fb",
+            @"FR": @"#3f51b5",
+            @"GB": @"#8bc34a",
+            @"DE": @"#ffc107",
+        };
+        NSString *fallbackColorStr = @"#00bcd4";
+        
+        NSString *colorStr = colors[countryCode];
+        if (!colorStr) {
+            colorStr = fallbackColorStr;
+        }
+        
+        UIImage *image = [_pinImagesByColor objectForKey:colorStr];
+        if (!image) {
+            UIColor *color = [UIColor colorWithHexString:colorStr];
+            image = [self.basePinImage imageByChangingColorTo:color];
+            [_pinImagesByColor setObject:image forKey:colorStr];
+        }
+        
+        return image;
+    }
+    else {
+        return nil;
+    }
 }
 
 - (void)mapViewWillStartLoadingMap:(MKMapView *)mapView {

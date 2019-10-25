@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		450C259123639BED00F906C1 /* MyAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 450C259023639BED00F906C1 /* MyAnnotation.m */; };
+		450C25952363A68900F906C1 /* UIImage+ColorChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 450C25942363A68900F906C1 /* UIImage+ColorChange.m */; };
+		450C25982363AEF000F906C1 /* UIColor+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 450C25972363AEF000F906C1 /* UIColor+Utility.m */; };
 		4557DA2723610257003752D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4557DA2623610257003752D3 /* UIKit.framework */; };
 		459005F12360F2EE00B0F296 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459005F02360F2EE00B0F296 /* MapKit.framework */; };
 		45E1C7292360EE400079DBB1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1C7282360EE400079DBB1 /* AppDelegate.m */; };
@@ -23,6 +25,10 @@
 /* Begin PBXFileReference section */
 		450C258F23639BED00F906C1 /* MyAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAnnotation.h; sourceTree = "<group>"; };
 		450C259023639BED00F906C1 /* MyAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAnnotation.m; sourceTree = "<group>"; };
+		450C25932363A68900F906C1 /* UIImage+ColorChange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorChange.h"; sourceTree = "<group>"; };
+		450C25942363A68900F906C1 /* UIImage+ColorChange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorChange.m"; sourceTree = "<group>"; };
+		450C25962363AEF000F906C1 /* UIColor+Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utility.h"; sourceTree = "<group>"; };
+		450C25972363AEF000F906C1 /* UIColor+Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utility.m"; sourceTree = "<group>"; };
 		4557DA2623610257003752D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		459005F02360F2EE00B0F296 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		45E1C7242360EE400079DBB1 /* mapapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mapapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +59,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		450C25922363A65600F906C1 /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				450C25932363A68900F906C1 /* UIImage+ColorChange.h */,
+				450C25942363A68900F906C1 /* UIImage+ColorChange.m */,
+				450C25962363AEF000F906C1 /* UIColor+Utility.h */,
+				450C25972363AEF000F906C1 /* UIColor+Utility.m */,
+			);
+			path = utility;
+			sourceTree = "<group>";
+		};
 		459005EF2360F2EE00B0F296 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +99,7 @@
 		45E1C7262360EE400079DBB1 /* mapapp */ = {
 			isa = PBXGroup;
 			children = (
+				450C25922363A65600F906C1 /* utility */,
 				45F273912360F0CE002FCC4F /* data */,
 				45E1C7272360EE400079DBB1 /* AppDelegate.h */,
 				45E1C7282360EE400079DBB1 /* AppDelegate.m */,
@@ -180,6 +198,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E1C72F2360EE400079DBB1 /* ViewController.m in Sources */,
+				450C25982363AEF000F906C1 /* UIColor+Utility.m in Sources */,
+				450C25952363A68900F906C1 /* UIImage+ColorChange.m in Sources */,
 				450C259123639BED00F906C1 /* MyAnnotation.m in Sources */,
 				45E1C7292360EE400079DBB1 /* AppDelegate.m in Sources */,
 				45E1C73A2360EE460079DBB1 /* main.m in Sources */,
