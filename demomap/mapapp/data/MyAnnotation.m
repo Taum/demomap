@@ -46,6 +46,7 @@
         
         _coordinate = CLLocationCoordinate2DMake(lat, lon);
         _title = [[item valueForKey:@"name"] copy];
+        _subtitle = [[item valueForKey:@"location"] copy];
         _countryCode = [[item valueForKey:@"country_code"] copy];
     }
     return self;
