@@ -96,7 +96,9 @@ static NSString *USER_LOC_PIN_ID = @"USER_LOC_PIN";
 
 - (IBAction)centerOnMe:(id)sender {
     MKUserLocation *userLocation = self.mapView.userLocation;
-    if (userLocation) {
+    
+    // TODO : fix this check to verify if getting the user location is allowed instead. We could also disable this button if that's the case
+    if (userLocation && (userLocation.coordinate.longitude != 0.0 && userLocation.coordinate.latitude != 0.0)) {
         MKCoordinateRegion regionToZoom = MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(2.0, 2.0));
         [self.mapView setRegion:regionToZoom];
     }
