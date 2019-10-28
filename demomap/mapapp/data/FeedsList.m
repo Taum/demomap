@@ -8,6 +8,8 @@
 
 #import "FeedsList.h"
 
+NSNotificationName const FeedsListDownloadFailedNotification = @"FeedsListDownloadFailedNotification";
+
 @interface FeedsList ()
 
 @property (nonatomic) NSURLSessionDownloadTask *downloadTask;
@@ -56,7 +58,13 @@
 }
 
 - (void)loadFeedFromSavedData {
-    // TODO
+    // TODO : Load from previously saved data instead
+    
+    // If no data saved, show error :
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:FeedsListDownloadFailedNotification object:nil userInfo:nil];
+    });
+    
 }
 
 - (void)saveFeedData:(NSURL*)location {

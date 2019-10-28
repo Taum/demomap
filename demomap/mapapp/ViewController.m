@@ -42,6 +42,8 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     
     FeedsList *list = [FeedsList sharedInstance];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedsListDownloadFailed:) name:FeedsListDownloadFailedNotification object:nil];
+    
     [list addObserver:self
            forKeyPath:@"annotations"
               options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial)
@@ -51,6 +53,8 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
 - (void)dealloc {
     FeedsList *list = [FeedsList sharedInstance];
     [list removeObserver:self forKeyPath:@"annotations" context:@"annotationsChange"];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath
@@ -70,6 +74,13 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     }
 }
 
+- (void)feedsListDownloadFailed:(NSNotification*)notification {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Failed to download feed data. Please check your internet connection" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"😔" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 //#pragma mark - Map View Delegate methods
 

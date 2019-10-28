@@ -11,6 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSNotificationName const _Nonnull FeedsListDownloadFailedNotification;
+
 @interface FeedsList : NSObject
 
 + (id)sharedInstance;
