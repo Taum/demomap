@@ -7,14 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "MyAnnotation.h"
+#import "FeedsList.h"
 
 #import "UIImage+ColorChange.h"
 #import "UIColor+Utility.h"
 
 @interface ViewController () <MKMapViewDelegate>
 
-@property (nonatomic) NSArray *annotations;
 @property (nonatomic) UIImage *basePinImage;
 @property (nonatomic) NSMutableDictionary *pinImagesByColor;
 
@@ -27,16 +26,9 @@
 @implementation ViewController
 
 
+static void *ANNOTATIONS_CHANGE_CTX = @"ANNOTATIONS_CHANGE";
 static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
 
-- (void)setAnnotations:(NSArray *)annotations {
-    
-    _annotations = annotations;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.mapView removeAnnotations:self.mapView.annotations];
-        [self.mapView addAnnotations:annotations];
-    });
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,69 +40,36 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     self.mapView.delegate = self;
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:ANNOTATION_PIN_ID];
     
-    [self downloadData];
-}
-
-- (void)downloadData {
-    NSURL *url = [NSURL URLWithString:@"https://api.transitapp.com/v3/feeds?detailed=1"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    self.downloadTask = [session downloadTaskWithURL:url
-                                   completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"Error during feed download: %@", error);
-            [self loadFeedFromSavedData];
-        }
-        else {
-            NSLog(@"Download finished");
-            [self saveFeedData:location];
-        }
-    }];
-    [self.downloadTask resume];
-    NSLog(@"Starting download for %@", url);
-}
-
-- (void)loadFeedFromSavedData {
-    // TODO
-}
-
-- (void)saveFeedData:(NSURL*)location {
-    // TODO save data
-    [self updateFeedData:location];
-}
-
-- (void)updateFeedData:(NSURL*)location {
+    FeedsList *list = [FeedsList sharedInstance];
     
-    NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfURL:location options:NSDataReadingMapped error:&error];
-    if (error) {
-        NSLog(@"Error loading feed data: %@", error);
-        return;
+    [list addObserver:self
+           forKeyPath:@"annotations"
+              options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial)
+              context:ANNOTATIONS_CHANGE_CTX];
+}
+
+- (void)dealloc {
+    FeedsList *list = [FeedsList sharedInstance];
+    [list removeObserver:self forKeyPath:@"annotations" context:@"annotationsChange"];
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath
+                      ofObject:(nullable id)object
+                        change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(nullable void *)context {
+    if (context == ANNOTATIONS_CHANGE_CTX) {
+        
+        // Ideally we would check here for changes to the annotations array and only update those
+        FeedsList *list = (FeedsList*)object;
+        NSArray *annotations = list.annotations;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mapView removeAnnotations:self.mapView.annotations];
+            [self.mapView addAnnotations:annotations];
+        });
     }
-    
-    NSDictionary *jsonRoot = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    if (error) {
-        NSLog(@"Error parsing feed data: %@", error);
-        return;
-    }
-    
-    self.feedData = [jsonRoot valueForKey:@"feeds"];
-    
-    NSLog(@"Update feed data with %ld entries", [self.feedData count]);
-    
-    [self addAnnotationsWithFeedItems:self.feedData];
 }
 
-- (void)addAnnotationsWithFeedItems:(NSArray*)items {
-    
-    NSMutableArray *array = [NSMutableArray array];
-    
-    for (NSDictionary *item in items) {
-        MyAnnotation *annotation = [[MyAnnotation alloc] initWithFeedItem:item];
-        [array addObject:annotation];
-    }
-    
-    self.annotations = array;
-}
 
 //#pragma mark - Map View Delegate methods
 

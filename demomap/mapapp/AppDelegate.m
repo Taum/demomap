@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FeedsList.h"
 
 @interface AppDelegate ()
 
@@ -17,9 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[FeedsList sharedInstance] registerDownloadHooks];
+    
     return YES;
 }
-
 
 #pragma mark - UISceneSession lifecycle
 
