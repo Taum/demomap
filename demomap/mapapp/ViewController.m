@@ -18,6 +18,8 @@
 @property (nonatomic) UIImage *basePinImage;
 @property (nonatomic) NSMutableDictionary *pinImagesByColor;
 
+@property (nonatomic) NSURLSessionDownloadTask *downloadTask;
+
 @end
 
 
@@ -26,6 +28,15 @@
 
 
 static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
+
+- (void)setAnnotations:(NSArray *)annotations {
+    
+    _annotations = annotations;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [self.mapView addAnnotations:annotations];
+    });
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,14 +48,40 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     self.mapView.delegate = self;
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:ANNOTATION_PIN_ID];
     
-    [self loadData];
+    [self downloadData];
 }
 
+- (void)downloadData {
+    NSURL *url = [NSURL URLWithString:@"https://api.transitapp.com/v3/feeds?detailed=1"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    self.downloadTask = [session downloadTaskWithURL:url
+                                   completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error during feed download: %@", error);
+            [self loadFeedFromSavedData];
+        }
+        else {
+            NSLog(@"Download finished");
+            [self saveFeedData:location];
+        }
+    }];
+    [self.downloadTask resume];
+    NSLog(@"Starting download for %@", url);
+}
 
-- (void)loadData {
-    NSString *feedPath = [[NSBundle mainBundle] pathForResource:@"feed" ofType:@"json"];
+- (void)loadFeedFromSavedData {
+    // TODO
+}
+
+- (void)saveFeedData:(NSURL*)location {
+    // TODO save data
+    [self updateFeedData:location];
+}
+
+- (void)updateFeedData:(NSURL*)location {
+    
     NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfFile:feedPath options:NSDataReadingMapped error:&error];
+    NSData *data = [NSData dataWithContentsOfURL:location options:NSDataReadingMapped error:&error];
     if (error) {
         NSLog(@"Error loading feed data: %@", error);
         return;
@@ -58,7 +95,7 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     
     self.feedData = [jsonRoot valueForKey:@"feeds"];
     
-    NSLog(@"Parsed feed data with %ld entries", [self.feedData count]);
+    NSLog(@"Update feed data with %ld entries", [self.feedData count]);
     
     [self addAnnotationsWithFeedItems:self.feedData];
 }
@@ -73,7 +110,6 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     }
     
     self.annotations = array;
-    [self.mapView addAnnotations:self.annotations];
 }
 
 //#pragma mark - Map View Delegate methods
@@ -151,5 +187,30 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {
     NSLog(@"DidFinishLoadingMap");
 }
+
+
+/*
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+    MKAnnotationView *aV;
+
+    float delay = 0.00;
+    float increment = 1.0 / (float)MAX(views.count, 5);
+
+    for (aV in views) {
+        CGRect endFrame = aV.frame;
+
+        aV.alpha = 0;
+        delay = delay + increment;
+
+        [UIView animateWithDuration:0.5
+                              delay:delay
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+            aV.alpha = 1.0;
+        }
+                         completion:nil];
+    }
+}
+ */
 
 @end
