@@ -14,6 +14,8 @@
 
 @interface ViewController () <MKMapViewDelegate>
 
+@property (nonatomic) CLLocationManager *locationManager;
+
 @property (nonatomic) UIImage *basePinImage;
 @property (nonatomic) NSMutableDictionary *pinImagesByColor;
 
@@ -28,6 +30,7 @@
 
 static void *ANNOTATIONS_CHANGE_CTX = @"ANNOTATIONS_CHANGE";
 static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
+static NSString *USER_LOC_PIN_ID = @"USER_LOC_PIN";
 
 
 - (void)viewDidLoad {
@@ -39,6 +42,14 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     
     self.mapView.delegate = self;
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:ANNOTATION_PIN_ID];
+    
+    self.mapView.showsUserLocation = YES;
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager requestWhenInUseAuthorization];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    self.locationManager.distanceFilter = 0;
+    [self.locationManager startUpdatingLocation];
     
     FeedsList *list = [FeedsList sharedInstance];
     
@@ -55,6 +66,7 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     [list removeObserver:self forKeyPath:@"annotations" context:@"annotationsChange"];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath
@@ -82,13 +94,27 @@ static NSString *ANNOTATION_PIN_ID = @"ANNOTATION_PIN";
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (IBAction)centerOnMe:(id)sender {
+    MKUserLocation *userLocation = self.mapView.userLocation;
+    if (userLocation) {
+        MKCoordinateRegion regionToZoom = MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(2.0, 2.0));
+        [self.mapView setRegion:regionToZoom];
+    }
+}
+
+
+
 //#pragma mark - Map View Delegate methods
 
 - (MKAnnotationView*)mapView:(MKMapView*)mv viewForAnnotation:(id<MKAnnotation>)annotation {
     
     // If the annotation is the user location, just return nil.
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
-          return nil;
+        return nil;
+//        MKAnnotationView *userAV = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:USER_LOC_PIN_ID];
+//        userAV.image = self.basePinImage;
+//        userAV.canShowCallout = NO;
+//        return userAV;
     }
     
     MKAnnotationView *view = (MKAnnotationView*)[mv dequeueReusableAnnotationViewWithIdentifier:ANNOTATION_PIN_ID

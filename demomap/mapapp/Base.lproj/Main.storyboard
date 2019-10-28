@@ -23,8 +23,19 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="QyC-ja-JLJ"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LcK-Ws-GUa" userLabel="Center On Me">
+                                <rect key="frame" x="20" y="782" width="96" height="30"/>
+                                <state key="normal" title="Center On Me"/>
+                                <connections>
+                                    <action selector="centerOnMe:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T4q-mU-fOo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="LcK-Ws-GUa" secondAttribute="bottom" constant="50" id="1CQ-3j-uFT"/>
+                            <constraint firstItem="LcK-Ws-GUa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="rVW-mO-CRJ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
