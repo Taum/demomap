@@ -127,8 +127,11 @@ static NSString *USER_LOC_PIN_ID = @"USER_LOC_PIN";
     }
 
     view.image = [self imageForAnnotation:annotation];
-//    view.tint = [UIColor greenColor];
     view.canShowCallout = YES;
+        
+    // Make pin anchor point the bottom-center point of the image
+    CGSize imgSize = view.image.size;
+    view.centerOffset = CGPointMake(0, imgSize.height * -0.5);
     
     return view;
     
